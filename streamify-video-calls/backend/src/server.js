@@ -9,9 +9,10 @@ import userRoutes from "./routes/user.route.js";
 import chatRoutes from "./routes/chat.route.js";
 
 import { connectDB } from "./lib/db.js";
+import mongoose from "mongoose";
 
 const app = express();
-const PORT = process.env.PORT;
+//const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
 
@@ -21,6 +22,7 @@ app.use(
     credentials: true, // allow frontend to send cookies
   })
 );
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -36,8 +38,31 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
+let isConnected = false;
+async function connectToMongoDB(){
+  try{
+    await mongoose.connect(process.env.MONGO_URI),{
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    };
+    isConnected = true;
+    console.log("Connected to MongoDB");
+  } catch(error){
+    console.error("Error connecting to MongoDB:", error);
+  }
+}
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
-});
+app.use((req,res,next)=>{
+  if(!isConnected){
+    connectToMongoDB();
+  }
+  next();
+
+})
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+//   connectDB();
+// });
+
+module.exports = app;
