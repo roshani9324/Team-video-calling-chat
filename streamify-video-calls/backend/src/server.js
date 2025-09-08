@@ -12,7 +12,7 @@ import { connectDB } from "./lib/db.js";
 import mongoose from "mongoose";
 
 const app = express();
-//const PORT = process.env.PORT;
+const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
 
