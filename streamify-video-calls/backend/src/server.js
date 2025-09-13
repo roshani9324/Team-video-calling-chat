@@ -17,10 +17,14 @@ const __dirname = path.resolve();
 
 app.use(
   cors({
-    origin: "https://team-video-calling-chat.vercel.app/",
-    credentials: true, // allow frontend to send cookies
+    origin: [
+      "http://localhost:5173",
+      "https://your-frontend.vercel.app", // your frontend domain
+    ],
+    credentials: true,
   })
 );
+
 
 
 app.use(express.json());
