@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "team-video-calling-chat-frontend.vercel.app", // your frontend domain
+      "http://team-video-calling-chat-frontend.vercel.app", // your frontend domain
     ],
     credentials: true,
   })
