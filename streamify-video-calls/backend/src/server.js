@@ -10,6 +10,7 @@ import chatRoutes from "./routes/chat.route.js";
 
 import { connectDB } from "./lib/db.js";
 import mongoose from "mongoose";
+import { error } from "console";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -59,6 +60,13 @@ if (process.env.NODE_ENV === "production") {
 //   next();
 
 // })
+
+app.get("/", (req, res) => {
+  res.send({
+    activeStatus: true,
+  error : false
+  })
+})
 
 app.listen(PORT, () => {
    console.log(`Server is running on port ${PORT}`);
