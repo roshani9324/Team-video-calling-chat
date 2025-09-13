@@ -9,8 +9,6 @@ import userRoutes from "./routes/user.route.js";
 import chatRoutes from "./routes/chat.route.js";
 
 import { connectDB } from "./lib/db.js";
-import mongoose from "mongoose";
-import { error } from "console";
 
 const app = express();
 const PORT = process.env.PORT;
