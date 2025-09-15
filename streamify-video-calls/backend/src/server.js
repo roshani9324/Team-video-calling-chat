@@ -14,6 +14,13 @@ const app = express();
 const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
+/* 1️⃣  connect to DB before mounting routes */
+connectDB()
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => {
+    console.error("❌ DB connection failed:", err.message);
+    process.exit(1); // stop if DB not available
+  });
 
 app.use(
   cors({
@@ -60,7 +67,6 @@ if (process.env.NODE_ENV === "production") {
 //     connectToMongoDB();
 //   }
 //   next();
-
 // })
 
 app.get("/", (req, res) => {
@@ -70,9 +76,15 @@ app.get("/", (req, res) => {
   })
 })
 
+/* 6️⃣  error handler to see real errors */
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ message: err.message || "Server Error" });
+});
+
+/* 7️⃣  start server locally */
 app.listen(PORT, () => {
-   console.log(`Server is running on port ${PORT}`);
-  connectDB();
- });
+  console.log(`Server running on port ${PORT}`);
+});
 
 //module.exports = app;
