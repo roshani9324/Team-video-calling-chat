@@ -1,12 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://team-video-calling-chat.vercel.app/"
-    },
-    {
       "source": "/(.*)",
-      "destination": "./index.html"
+      "destination": "/index.html"
     }
   ]
 }
